@@ -74,6 +74,8 @@ int Demo::MainEntryPoints::mainAppMultiThreaded( int argc, const char *argv[] )
 
     Ogre::Barrier barrier( 2 );
 
+    MainEntryPoints::setExecutable(argv[0]);
+
     MainEntryPoints::createSystems( &graphicsGameState, &graphicsSystem,
                                     &logicGameState, &logicSystem );
 
@@ -103,7 +105,7 @@ unsigned long renderThreadApp( Ogre::ThreadHandle *threadHandle )
     GraphicsSystem *graphicsSystem  = threadData->graphicsSystem;
     Ogre::Barrier *barrier          = threadData->barrier;
 
-    graphicsSystem->initialize( "Tutorial 06: Multithreading" );
+    graphicsSystem->initialize( Demo::MainEntryPoints::getWindowTitle() );
     barrier->sync();
 
     if( graphicsSystem->getQuit() )

@@ -1,6 +1,7 @@
 
 #include "GraphicsSystem.h"
 #include "GameState.h"
+#include "System/MainEntryPoints.h"
 #if OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS
     #include "SdlInputHandler.h"
 #endif
@@ -51,7 +52,8 @@
 namespace Demo
 {
     GraphicsSystem::GraphicsSystem( GameState *gameState,
-                                    Ogre::String resourcePath ,
+                                    Ogre::String pluginsFolder,
+                                    Ogre::String resourcePath,
                                     Ogre::ColourValue backgroundColour ) :
         BaseSystem( gameState ),
         mLogicSystem( 0 ),
@@ -64,7 +66,7 @@ namespace Demo
         mSceneManager( 0 ),
         mCamera( 0 ),
         mWorkspace( 0 ),
-        mPluginsFolder( "./" ),
+        mPluginsFolder( pluginsFolder ),
         mResourcePath( resourcePath ),
         mOverlaySystem( 0 ),
         mAccumTimeSinceLastLogicFrame( 0 ),
@@ -77,6 +79,16 @@ namespace Demo
         mUseMicrocodeCache( true ),
         mBackgroundColour( backgroundColour )
     {
+        if( pluginsFolder == "" )
+        {
+            Ogre::String e = MainEntryPoints::getExecutable();
+            size_t i =  e.find_last_of("/");
+            mPluginsFolder = e.substr(0, i + 1 );
+        }
+        if( resourcePath == "" )
+        {
+            mResourcePath = resourcePath + "../Data/";
+        }
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
         // Note:  macBundlePath works for iOS too. It's misnamed.
         mResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";

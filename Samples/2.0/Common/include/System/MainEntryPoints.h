@@ -106,6 +106,10 @@ namespace Demo
 
         static const char* getWindowTitle(void);
 
+        static void setExecutable(const char*);
+        static Ogre::String getExecutable(void);
+
+        static Ogre::String Executable;
         /// Time in seconds a frame should last in fixed timestep (e.g. to simulate
         /// physics at 60hz; set it to Frametime = 1 / 60.0). The default is 60hz
         static double Frametime;

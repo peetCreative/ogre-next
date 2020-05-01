@@ -55,6 +55,8 @@ int Demo::MainEntryPoints::mainAppSingleThreaded( int argc, const char *argv[] )
     GameState *logicGameState = 0;
     LogicSystem *logicSystem = 0;
 
+    MainEntryPoints::setExecutable(argv[0]);
+
     MainEntryPoints::createSystems( &graphicsGameState, &graphicsSystem,
                                     &logicGameState, &logicSystem );
 

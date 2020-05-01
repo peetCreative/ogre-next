@@ -32,7 +32,20 @@ THE SOFTWARE.
 
 #include "System/MainEntryPoints.h"
 
+using namespace Demo;
+
 namespace Demo
 {
     double MainEntryPoints::Frametime = 1.0 / 60.0;
+    Ogre::String MainEntryPoints::Executable = "";
+
+    void MainEntryPoints::setExecutable(const char* executable)
+    {
+        Executable = Ogre::String(executable);
+    }
+
+    Ogre::String MainEntryPoints::getExecutable(void)
+    {
+        return Executable;
+    }
 }
