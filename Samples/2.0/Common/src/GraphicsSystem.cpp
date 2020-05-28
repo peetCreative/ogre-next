@@ -53,7 +53,9 @@
 namespace Demo
 {
     GraphicsSystem::GraphicsSystem( GameState *gameState,
+                                    bool alwaysAskForConfig ,
                                     Ogre::String resourcePath ,
+                                    Ogre::String pluginsFolder ,
                                     Ogre::ColourValue backgroundColour ) :
         BaseSystem( gameState ),
         mLogicSystem( 0 ),
@@ -66,7 +68,7 @@ namespace Demo
         mSceneManager( 0 ),
         mCamera( 0 ),
         mWorkspace( 0 ),
-        mPluginsFolder( "./" ),
+        mPluginsFolder( pluginsFolder ),
         mResourcePath( resourcePath ),
         mOverlaySystem( 0 ),
         mAccumTimeSinceLastLogicFrame( 0 ),
@@ -74,7 +76,7 @@ namespace Demo
         mThreadGameEntityToUpdate( 0 ),
         mThreadWeight( 0 ),
         mQuit( false ),
-        mAlwaysAskForConfig( true ),
+        mAlwaysAskForConfig( alwaysAskForConfig ),
         mUseHlmsDiskCache( true ),
         mUseMicrocodeCache( true ),
         mBackgroundColour( backgroundColour )
@@ -684,7 +686,9 @@ namespace Demo
         Ogre::String rootHlmsFolder = Ogre::macBundlePath() + '/' +
                                   cf.getSetting( "DoNotUseAsResource", "Hlms", "" );
 #else
-        Ogre::String rootHlmsFolder = mResourcePath + cf.getSetting( "DoNotUseAsResource", "Hlms", "" );
+        Ogre::String rootHlmsFolder = cf.getSetting( "DoNotUseAsResource", "Hlms", "" );
+        if ( *(rootHlmsFolder.begin()) != '/' )
+            rootHlmsFolder = mResourcePath + rootHlmsFolder;
 #endif
 
         if( rootHlmsFolder.empty() )
